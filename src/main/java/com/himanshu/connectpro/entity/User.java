@@ -5,6 +5,11 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+import java.util.HashSet;
+import java.util.Set;
+
+
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -13,6 +18,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class User {
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
